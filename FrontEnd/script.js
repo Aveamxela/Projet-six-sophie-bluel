@@ -23,7 +23,7 @@ async function addWorks () {
     works.forEach(work => {
         const addTag = `
                     <figure>
-                        <img src = ${work.imageUrl} alt = ${work.title} >
+                        <img src = "${work.imageUrl}" alt = "${work.title}" >
                         <figcaption> ${work.title} </figcaption>
                     </figure>`
         //Ajout des balises à la gallerie
@@ -33,3 +33,48 @@ async function addWorks () {
 }
 //Ajout des balises à la galerie
 addWorks()
+
+async function collectCategory() {
+    const responseCategory = await fetch ("http://localhost:5678/api/categories", {
+        method : 'GET',
+        headers : {
+            'Accept' : 'application/json',
+        }
+    })
+    const jsonDataCategory = await responseCategory.json();
+    return jsonDataCategory
+}
+collectCategory()
+
+async function addBtn () {
+    const categories = await collectCategory();
+    const sectionBtn = document.createElement ('section')
+    sectionBtn.classList.add('allBtn');
+    gallery.insertAdjacentElement('beforebegin',sectionBtn);
+    const categoryAll = `
+        <button class = "btn"> Tous </button>`;
+        sectionBtn.insertAdjacentHTML('beforeend', categoryAll);
+
+    //Set stocke des valeurs uniques(pas de doublons)
+    const categorySet = new Set();
+
+    //categorySet va stocker les categoryId de nos données compris dans notre tableau
+    categories.forEach (category => {
+        categorySet.add(category.name);
+    });
+    categorySet.forEach(category => {
+        let addBtn = `
+        <button class = "btn"> ${category} </button>`;
+        sectionBtn.insertAdjacentHTML('beforeend', addBtn);
+        console.log(category)
+    })
+}
+addBtn()
+
+
+
+
+
+//eventListener au click
+//Creer classe btn
+//Creer class btn active

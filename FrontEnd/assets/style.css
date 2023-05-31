@@ -125,6 +125,23 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+.allBtn {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+.btn {
+	display: flex;
+	border-radius: 50px;
+	background-color: white;
+	border : 1px solid #1D6154;
+	color:#1D6154;
+	padding: 9px 22px 9px 22px;
+}
+.btnActive {
+	background-color: #1D6154;
+	color: white;
+}
 .gallery {
 	width: 100%;
 	display: grid;
