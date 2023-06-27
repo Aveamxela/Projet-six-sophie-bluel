@@ -9,24 +9,79 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/fbbf5c3348.js" crossorigin="anonymous"></script>
 	<script src="script.js" defer></script>
 </head>
 <body>
+	<aside id="modal" class="hideModal">
+		<div class="positionModal">	
+			<div class="modal flexColumn position">
+				<span class="close clickable"> <i class="fa-solid fa-xmark"></i> </span>
+				<h3>Galerie Photo</h3>
+				<div class="modalContent flexRow"></div>
+				<hr>
+				<input class="addImg color clickable" type="submit" value="Ajouter une photo">
+				<p class="sup-gallery clickable">Supprimer la galerie</p>
+			</div>
+		</div>
+	</aside>
+	<aside id="modal2" class="hideModal2">
+		<div class="positionModal">	
+			<div class="modal flexColumn position ">
+				<span class="close clickable"> <i class="fa-solid fa-xmark"></i> </span>
+				<span class="back clickable"><i class="fa-solid fa-arrow-left-long"></i></span>
+				<h3>Ajout photo</h3>
+				<form id="validationForm" class="flexColumn">
+				<div class="containerImg flexColumn">
+					<div class="beforeUpdateImg">
+					<i class="flexCenter fa-regular fa-image"></i>
+					<label for="validationImg" class="btnAddImg clickable">+ Ajouter photo</label>
+					<input id="validationImg" class = "btnAddImg hideInput clickable" type="file" accept="image/jpg, image/png">
+					<p class ="flexCenter padBot">jpg, png : 4mo max</p>
+					</div>
+				</div>
+				<label for="title">Titre</label>
+				<input type="text" id="title" name="title" >
+				<label for="chooseCategory">Catégorie</label>
+				<select name="categoryId" id="chooseCategory">
+					<option value="" label =" "></option>
+				</select>
+				<div id="error">
+					<p  class="error"></p>
+				</div>
+				<hr>
+				<input id="btnValid"  class="btnValid clickable" type="submit" value="Valider">
+				</form>
+			</div>
+		</div>
+	</aside>
+
+
+	<div class ="editionMode">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<p>Mode édition</p>
+		<button>publier les changements</button>
+	</div>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
+			<li class="aActive"><a href="index.html">projets</a></li>
 			<li>contact</li>
-			<li>login</li>
+			<li class = "login"><a href="login.html">login</a></li>
+			<li class = "hide logout"><a href="login.html">logout</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <main>
 	<section id="introduction">
-		<figure>
+		<figure class="flexColumn">
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<button class ="hide imageModif flexRow margin clickable">
+			<i class=" fa-regular fa-pen-to-square"></i>
+			<span>modifier</span>
+			</button>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -36,21 +91,29 @@
 		</article>
 	</section>
 	<section id="portfolio">
+		<div class="projects flexRow">
 		<h2>Mes Projets</h2>
+		<button class ="hide imageModif flexRow clickable">
+			<i class="fa-regular fa-pen-to-square"></i>
+			<span>modifier</span>
+		</button>
+		</div>
+		<div class ="allBtn flexRow">
+		</div>
 		<div class="gallery">
 		</div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="post">
+		<form action="#" method="post" class="flexColumn">
 			<label for="name">Nom</label>
 			<input type="text" name="name" id="name">
 			<label for="email">Email</label>
 			<input type="email" name="email" id="email">
 			<label for="message">Message</label>
 			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
+			<input class = "color clickable" type="submit" value="Envoyer">
 		</form>
 	</section>
 </main>
