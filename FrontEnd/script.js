@@ -186,7 +186,6 @@ function addRemoveArrow() {
 }
 
 async function deleteWork(id) {
-    //récupération de l'élément image associé à l'icone de la poubelle cliquée
     //appel de la fonction pour supprimer l'image
     try {
         await deleteWorkFromApi(id);
@@ -217,26 +216,21 @@ function changeModal() {
     });
 }
 
-//Ajouter photo
+//Ajouter photo (lorsque l'utilisateur modifie la valeur de l'élément)
 imgForm.addEventListener("change", updateImage);
 function updateImage() {
-    const newImg = imgForm.files; //récupération des fichiers sélectionnés par l'User
-    for (let i = 0; i < newImg.length; i++) {
-        if (validFileSize(newImg[i])) {
-            //vérification type de fichier valide
+    const newImg = imgForm.files[0]; //récupération des fichiers sélectionnés par l'User
+        if (newImg && validFileSize(newImg) && validFileType(newImg)) { //verif si newImg est défini avant d'appeler la fonction validFleSize
             const displayImg = document.createElement("img");
             displayImg.classList.add("sizing");
             displayImg.setAttribute("id", "imgForm");
-            displayImg.src = window.URL.createObjectURL(newImg[i]);
+            displayImg.src = window.URL.createObjectURL(newImg);
             containerImg.appendChild(displayImg);
             afterUpdateImg.style.setProperty("display", "none");
             console.log("img OK");
-        } else {
-            const errorType = document.createElement("p");
-            errorType.textContent = "Format d'image non valide";
         }
     }
-}
+
 function validFileSize(file) {
     if (file.size < 4000000) {
         console.log("size OK");
@@ -246,9 +240,18 @@ function validFileSize(file) {
         return false;
     }
 }
+function validFileType(file) {
+    const acceptedTypes = ["image/jpeg", "image/png"]; //types fichier acceptés
+    if (acceptedTypes.includes(file.type)){// si type de fichier inclu dans la liste des types acceptés
+        return true;
+    } else {
+        displayErrorMessage("Le type de fichier n'est pas valide")
+        return false
+    } 
+}
 //Ajout catégorie dans liste déroulante
 async function addCategory() {
-    categories.shift();
+    categories.shift();//enlève le premier élément du tableau donc id=0 (tous)
     categories.sort((a, b) => a.id - b.id); // Tri des catégories par ID
     const chooseCategory = document.getElementById("chooseCategory");
     categories.forEach((category) => {
@@ -266,8 +269,6 @@ function submitForm() {
             categoryForm.value === "" // si aucune catégorie sélectionnée
         ) {
             displayErrorMessage("Veuillez renseigner tous les champs");
-
-            return;
         } else {
             // si champs remplis
             const formData = new FormData(); // contient les données du formulaire
@@ -322,7 +323,6 @@ function displayErrorMessage(message) {
     error.textContent = message;
 }
 
-//Ouvrir/fermer modale
 function openModal() {
     // Open Modal
     if (hideModal.classList.contains("hideModal")) {
@@ -348,7 +348,7 @@ function closeModal() {
     modalContainers.forEach((modalContainer) => {
         modalContainer.addEventListener("click", (event) => {
             if (event.target === modalContainer) {
-                //verifie si le clic de l'utilisateur est le même élément
+                //verifie si le clic de l'utilisateur est sur modalContainers et non sur l'un de ses enfants
                 hideModal.style.display = "none";
                 hideModal2.style.display = "none";
             }
@@ -374,7 +374,6 @@ function logOut() {
 }
 
 async function init() {
-    console.log("2");
     await addBtn();
     btnActive();
     filter();
