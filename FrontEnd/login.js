@@ -1,6 +1,5 @@
 const form = document.querySelector("form");
 import { postLog } from "./service.js";
-
 //vérifie si message d'erreur existant, si oui, on le supprime
 function removeErrorMessage() {
     const errorMessageExist = document.querySelector(".error");
@@ -8,6 +7,7 @@ function removeErrorMessage() {
         errorMessageExist.remove();
     }
 }
+
 
 //Ecouteur d'événements sur la soumission du formulaire
 form.addEventListener("submit", async (event) => {

@@ -149,6 +149,7 @@ li a:hover {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+	justify-items: center;
 }
 
 .gallery img {
@@ -325,9 +326,10 @@ a{
 	overflow: auto;
 	align-items: center;
 	background-color: white;
-	width: 63%;
+	width: 630px;
+	height: 92%;
 	border-radius: 10px;
-	padding-top:60px;
+	padding-top:40px;
 }
 .positionModal{
 	display: flex;
@@ -350,30 +352,32 @@ h3{
 	font-size: 26px;
 }
 hr{
-	border: none;
 	width: 420px;
 	border: 1px solid #B3B3B3;
+	margin: 0px;
 }
 .modalContent{
-	display: flex;
-	flex-wrap: wrap;
 	justify-content: flex-start;
-	gap: 13px;
-	padding: 50px 100px;
-	position: relative;
-	
-
+    padding: 40px 100px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 6px;
+    grid-row-gap: 10px;
+}
+.work{
+	width: 80px;
+	display: flex;
+    flex-direction: column;
 }
 .img-modal{
-	width: 75px;
-	height: 100px;
 	object-fit: cover;
-
-
+	padding-bottom: 6px;
 }
+
 .sup-gallery{
 	color:#D65353;
-	margin-bottom: 48px;
+	margin-bottom: 40px;
 }
 .position {
 	position:relative;

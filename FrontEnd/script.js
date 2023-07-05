@@ -73,11 +73,11 @@ function filter() {
         .filter(
             // filtre les elements du tableau selon certaines conditions
             (work) =>
-                selectedBtns.length === 0 || //si aucun sélectionné, afficher tous
-                selectedBtns.map((btn) => btn.id).includes("btn0") || //si bouton "tous" alors affihcer tous
+                selectedBtns.length === 0 ||
+                selectedBtns.map((btn) => btn.id).includes("btn0") ||
                 selectedBtns
                     .map((btn) => btn.id)
-                    .includes(`btn${work.categoryId}`) // si bouton correspond à categorie alors afficher les works
+                    .includes(`btn${work.categoryId}`)
         )
         .map(
             // si condition OK ajout à la gallerie
@@ -220,7 +220,7 @@ function changeModal() {
 imgForm.addEventListener("change", updateImage);
 function updateImage() {
     const newImg = imgForm.files[0]; //récupération des fichiers sélectionnés par l'User
-        if (newImg && validFileSize(newImg) && validFileType(newImg)) { //verif si newImg est défini avant d'appeler la fonction validFleSize
+        if (newImg && validFileSize(newImg) && validFileType(newImg)) { 
             const displayImg = document.createElement("img");
             displayImg.classList.add("sizing");
             displayImg.setAttribute("id", "imgForm");
@@ -242,7 +242,7 @@ function validFileSize(file) {
 }
 function validFileType(file) {
     const acceptedTypes = ["image/jpeg", "image/png"]; //types fichier acceptés
-    if (acceptedTypes.includes(file.type)){// si type de fichier inclu dans la liste des types acceptés
+    if (acceptedTypes.includes(file.type)){
         return true;
     } else {
         displayErrorMessage("Le type de fichier n'est pas valide")
