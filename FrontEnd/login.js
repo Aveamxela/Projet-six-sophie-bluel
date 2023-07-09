@@ -8,7 +8,6 @@ function removeErrorMessage() {
     }
 }
 
-
 //Ecouteur d'événements sur la soumission du formulaire
 form.addEventListener("submit", async (event) => {
     event.preventDefault(); // Empêche le rechargement de la page après la soumission du formulaire
@@ -23,12 +22,12 @@ form.addEventListener("submit", async (event) => {
             password: currentPassword,
         };
         console.log(data);
-       
+
         // Vérification si la réponse contient un jeton d'accès
-        const response = await postLog(data)
-        console.log(response)
+        const response = await postLog(data);
+        console.log(response);
         if (response.token) {
-            console.log("fonctionne")
+            console.log("fonctionne");
             // Stockage du jeton d'accès dans le stockage local
             localStorage.setItem("token", response.token);
             console.log("Jeton d'accès enregistré dans le stockage local.");

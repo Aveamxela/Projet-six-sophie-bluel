@@ -4,7 +4,7 @@ import { getWorks, getBtn, deleteWorkFromApi, sendData } from "./service.js";
 const hideModal = document.querySelector(".hideModal");
 const hideModal2 = document.querySelector(".hideModal2");
 const gallery = document.querySelector(".gallery");
-const works = await getWorks();
+let works = await getWorks();
 const categories = await getBtn();
 const sectionBtn = document.querySelector(".allBtn");
 const closeModalBtns = document.querySelectorAll(".close");
@@ -14,7 +14,6 @@ const btnAddImg = document.querySelector(".addImg");
 const editionMode = document.querySelector(".editionMode");
 const login = document.querySelector(".login");
 const imageModif = document.querySelectorAll(".imageModif");
-const validationForm = document.getElementById("validationForm");
 const imgForm = document.getElementById("validationImg");
 const titleForm = document.getElementById("title");
 const categoryForm = document.getElementById("chooseCategory");
@@ -49,6 +48,7 @@ async function addWorks() {
     `
         )
         .join(""); // sert à concaténer tous les éléments du tableau généré par map
+    console.log("ca fonctionne");
 }
 
 // Ajout des boutons de catégorie à la galerie
@@ -201,6 +201,7 @@ function deleteWorks() {
         trash.addEventListener("click", async (event) => {
             event.preventDefault();
             await deleteWork(workElement.dataset.workid);
+            works = await getWorks();
             await addWorks();
             addWorksToModal();
             filter();
@@ -219,17 +220,17 @@ function changeModal() {
 //Ajouter photo (lorsque l'utilisateur modifie la valeur de l'élément)
 imgForm.addEventListener("change", updateImage);
 function updateImage() {
-    const newImg = imgForm.files[0]; //récupération des fichiers sélectionnés par l'User
-        if (newImg && validFileSize(newImg) && validFileType(newImg)) { 
-            const displayImg = document.createElement("img");
-            displayImg.classList.add("sizing");
-            displayImg.setAttribute("id", "imgForm");
-            displayImg.src = window.URL.createObjectURL(newImg);
-            containerImg.appendChild(displayImg);
-            afterUpdateImg.style.setProperty("display", "none");
-            console.log("img OK");
-        }
+    let newImg = imgForm.files[0]; //récupération des fichiers sélectionnés par l'User
+    if (newImg && validFileSize(newImg) && validFileType(newImg)) {
+        const displayImg = document.createElement("img");
+        displayImg.classList.add("sizing");
+        displayImg.setAttribute("id", "imgForm");
+        displayImg.src = window.URL.createObjectURL(newImg);
+        containerImg.appendChild(displayImg);
+        afterUpdateImg.style.setProperty("display", "none");
+        console.log("img OK");
     }
+}
 
 function validFileSize(file) {
     if (file.size < 4000000) {
@@ -242,16 +243,16 @@ function validFileSize(file) {
 }
 function validFileType(file) {
     const acceptedTypes = ["image/jpeg", "image/png"]; //types fichier acceptés
-    if (acceptedTypes.includes(file.type)){
+    if (acceptedTypes.includes(file.type)) {
         return true;
     } else {
-        displayErrorMessage("Le type de fichier n'est pas valide")
-        return false
-    } 
+        displayErrorMessage("Le type de fichier n'est pas valide");
+        return false;
+    }
 }
 //Ajout catégorie dans liste déroulante
 async function addCategory() {
-    categories.shift();//enlève le premier élément du tableau donc id=0 (tous)
+    categories.shift(); //enlève le premier élément du tableau donc id=0 (tous)
     categories.sort((a, b) => a.id - b.id); // Tri des catégories par ID
     const chooseCategory = document.getElementById("chooseCategory");
     categories.forEach((category) => {
@@ -261,7 +262,8 @@ async function addCategory() {
 }
 //Soumission du formulaire
 function submitForm() {
-    validationForm.addEventListener("submit", (e) => {
+    const validationForm = document.getElementById("validationForm");
+    validationForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         if (
             imgForm.files.length === 0 || //si aucun fichier sélectionné
@@ -276,7 +278,18 @@ function submitForm() {
             formData.append("title", titleForm.value);
             formData.append("category", categoryForm.value);
             sendData(formData);
+            console.log("en premier");
             changeUserForm();
+            hideModal2.style.display = "none";
+            works = await getWorks();
+            await addWorks();
+            console.log("en deuxieme");
+            filter();
+            addWorksToModal();
+            validationForm.reset();
+            const previewImage = document.getElementById("imgForm");
+            previewImage.remove();
+            afterUpdateImg.style.setProperty("display", "contents");
         }
     });
 }
