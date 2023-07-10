@@ -21,6 +21,7 @@ const full = document.querySelector(".btnValid");
 const containerImg = document.querySelector(".containerImg");
 const afterUpdateImg = document.querySelector(".beforeUpdateImg");
 
+
 /**
  * Vérification authentification
  * Pas de paramètres
