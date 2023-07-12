@@ -21,7 +21,6 @@ const full = document.querySelector(".btnValid");
 const containerImg = document.querySelector(".containerImg");
 const afterUpdateImg = document.querySelector(".beforeUpdateImg");
 
-
 /**
  * Vérification authentification
  * Pas de paramètres
@@ -282,11 +281,13 @@ function submitForm() {
             console.log("en premier");
             changeUserForm();
             hideModal2.style.display = "none";
-            works = await getWorks();
-            await addWorks();
-            console.log("en deuxieme");
-            filter();
-            addWorksToModal();
+            // Attendre un court délai avant de récupérer les nouvelles données des travaux
+            setTimeout(async () => {
+                works = await getWorks();
+                await addWorks();
+                addWorksToModal();
+                filter();
+            }, 1000); //Délai permettant d'assurer une synchronisation entre l'ajout de l'élément et la récupération des données actualisées.
             validationForm.reset();
             const previewImage = document.getElementById("imgForm");
             previewImage.remove();
